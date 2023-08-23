@@ -6,7 +6,7 @@
 <br>
 
 <p align="center">
-        Qwen-7B <a href="https://modelscope.cn/models/qwen/Qwen-7B/summary">🤖 <a> | <a href="https://huggingface.co/Qwen/Qwen-7B">🤗</a>&nbsp ｜ Qwen-7B-Chat <a href="https://modelscope.cn/models/qwen/Qwen-7B-Chat/summary">🤖 <a>| <a href="https://huggingface.co/Qwen/Qwen-7B-Chat">🤗</a>&nbsp ｜ &nbsp<a href="https://modelscope.cn/studios/qwen/Qwen-7B-Chat-Demo/summary">Demo</a>&nbsp ｜ &nbsp<a href="https://github.com/QwenLM/Qwen-7B/blob/main/tech_memo.md">Report</a>
+        Qwen-7B <a href="https://modelscope.cn/models/qwen/Qwen-7B/summary">🤖 <a> | <a href="https://huggingface.co/Qwen/Qwen-7B">🤗</a>&nbsp ｜ Qwen-7B-Chat <a href="https://modelscope.cn/models/qwen/Qwen-7B-Chat/summary">🤖 <a>| <a href="https://huggingface.co/Qwen/Qwen-7B-Chat">🤗</a>&nbsp | Qwen-7B-Chat-Int4 <a href="https://huggingface.co/Qwen/Qwen-7B-Chat-Int4">🤗</a>&nbsp ｜ &nbsp<a href="https://modelscope.cn/studios/qwen/Qwen-7B-Chat-Demo/summary">Demo</a>&nbsp ｜ &nbsp<a href="https://github.com/QwenLM/Qwen-7B/blob/main/tech_memo.md">Report</a>&nbsp&nbsp | &nbsp&nbsp<a href="https://discord.gg/z3GAxXZ9Ce">Discord</a>
 </p>
 <br>
 
@@ -33,24 +33,26 @@ Qwen-7Bは、アリババクラウドが提唱する大規模言語モデルシ�
 
 ## ニュース
 
+* 2023.8.21 Qwen-7B-Chat 用 Int4 量子化モデル(**Qwen-7B-Chat-Int4**)をリリースしました。メモリコストは低いが、推論速度は向上している。また、ベンチマーク評価において大きな性能劣化はありません。
+
 * 2023.8.3 Qwen-7B と Qwen-7B-Chat を ModelScope と Hugging Face で公開。また、トレーニングの詳細やモデルの性能など、モデルの詳細についてはテクニカルメモを提供しています。
 
 ## パフォーマンス
 
-一般的に、Qwen-7B は、MMLU、C-Eval、GSM8K、HumanEval、WMT22 などの自然言語理解、数学的問題解決、コーディングなどに関するモデルの能力を評価する一連のベンチマークデータセットにおいて、同程度のモデルサイズのベースラインモデルを凌駕し、さらには 13B 程度のパラメータを持つより大規模なモデルをも凌駕している。以下の結果をご覧ください。
+一般的に、Qwen-7B は、MMLU、C-Eval、GSM8K、HumanEval、WMT22、CMMLU などの自然言語理解、数学的問題解決、コーディングなどに関するモデルの能力を評価する一連のベンチマークデータセットにおいて、同程度のモデルサイズのベースラインモデルを凌駕し、さらには 13B 程度のパラメータを持つより大規模なモデルをも凌駕している。以下の結果をご覧ください。
 
-| Model             | MMLU           |         C-Eval |          GSM8K |      HumanEval |  WMT22 (en-zh) |
-| :---------------- | :------------: | :------------: | :------------: | :------------: | :------------: |
-| LLaMA-7B          | 35.1           |              - |           11.0 |           10.5 |            8.7 |
-| LLaMA 2-7B        | 45.3           |              - |           14.6 |           12.8 |           17.9 |
-| Baichuan-7B       | 42.3           |           42.8 |            9.7 |            9.2 |           26.6 |
-| ChatGLM2-6B       | 47.9           |           51.7 |           32.4 |            9.2 |              - |
-| InternLM-7B       | 51.0           |           52.8 |           31.2 |           10.4 |           14.8 |
-| Baichuan-13B      | 51.6           |           53.6 |           26.6 |           12.8 |           30.0 |
-| LLaMA-13B         | 46.9           |           35.5 |           17.8 |           15.8 |           12.0 |
-| LLaMA 2-13B       | 54.8           |              - |           28.7 |           18.3 |           24.2 |
-| ChatGLM2-12B      | 56.2           |       **61.6** |           40.9 |              - |              - |
-| **Qwen-7B**       | **56.7**       |           59.6 |       **51.6** |       **24.4** |       **30.6** |
+| Model             | MMLU           |         C-Eval |          GSM8K |      HumanEval |  WMT22 (en-zh) |         CMMLU |
+| :---------------- | :------------: | :------------: | :------------: | :------------: | :------------: |:------------: |
+| LLaMA-7B          | 35.1           |              - |           11.0 |           10.5 |            8.7 |             - |
+| LLaMA 2-7B        | 45.3           |              - |           14.6 |           12.8 |           17.9 |             - |
+| Baichuan-7B       | 42.3           |           42.8 |            9.7 |            9.2 |           26.6 |          44.4 |
+| ChatGLM2-6B       | 47.9           |           51.7 |           32.4 |            9.2 |              - |          48.8 |
+| InternLM-7B       | 51.0           |           52.8 |           31.2 |           10.4 |           14.8 |             - |
+| Baichuan-13B      | 51.6           |           53.6 |           26.6 |           12.8 |           30.0 |          55.8 |
+| LLaMA-13B         | 46.9           |           35.5 |           17.8 |           15.8 |           12.0 |             - |
+| LLaMA 2-13B       | 54.8           |              - |           28.7 |           18.3 |           24.2 |             - |
+| ChatGLM2-12B      | 56.2           |       **61.6** |           40.9 |              - |              - |             - |
+| **Qwen-7B**       | **56.7**       |           59.6 |       **51.6** |       **24.4** |       **30.6** |      **58.8** |
 
 <p align="center">
     <img src="assets/performance.png" width="1000"/>
@@ -199,99 +201,64 @@ tiktoken に基づくトークナイザーは、他のトークナイザー、�
 
 ## 量子化
 
-`NF4` と `Int8` のモデルをロードする方法を示す例を提供します。手始めに、`bitsandbytes` が実装されていることを確認して下さい。`bitsandbytes` の要件は以下の通りになります:
+### 使用方法
 
+**注：[AutoGPTQ](https://github.com/PanQiWei/AutoGPTQ)に基づく新しい解決策を提供し、Qwen-7B-Chat用のInt4量子化モデル[ここをクリック](https://huggingface.co/Qwen/Qwen-7B-Chat-Int4)をリリースしました。このモデルは、従来の解決策と比較して、ほぼ無損失のモデル効果を達成しつつ、メモリコストと推論速度の両方で性能が向上しています**。
+
+ここでは、量子化されたモデルを推論に使用する方法を示します。始める前に、AutoGPTQの要件を満たしていることを確認し、ソースからインストールしてください（一時的にQwenのコードは最新版のPyPIパッケージではまだリリースされていません）：
+
+```bash
+git clone https://github.com/PanQiWei/AutoGPTQ.git && cd AutoGPTQ
+pip install .
 ```
-**必要条件** Python >= 3.8。Linux ディストリビューション（Ubuntu、MacOS など）+ CUDA > 10.0。
-```
 
-そして、以下のコマンドを実行して `bitsandbytes` をインストールする：
-
-```
-pip install bitsandbytes
-```
-
-Windows ユーザは、[bitsandbytes-windows-webui](https://github.com/jllllll/bitsandbytes-windows-webui/releases/tag/wheels) という別のオプションを見つける必要があります。
-
-そして、量子化の設定を `AutoModelForCausalLM.from_pretrained` に追加するだけとなります。以下の例を参照してください:
+そうすれば、以下のように簡単に量子化モデルを読み込むことができる。
 
 ```python
-from transformers import AutoModelForCausalLM, BitsAndBytesConfig
-
-# NF4（4ビット）の量子化設定
-quantization_config = BitsAndBytesConfig(
-    load_in_4bit=True,
-    bnb_4bit_quant_type='nf4',
-    bnb_4bit_compute_dtype=torch.bfloat16
-)
-
-# Int8（8ビット）の量子化設定
-quantization_config = BitsAndBytesConfig(load_in_8bit=True)
-
-model = AutoModelForCausalLM.from_pretrained(
-    args.checkpoint_path,
-    device_map="cuda:0",
-    quantization_config=quantization_config,
-    max_memory=max_memory,
-    trust_remote_code=True,
-).eval()
+from auto_gptq import AutoGPTQForCausalLM
+model = AutoGPTQForCausalLM.from_quantized("Qwen/Qwen-7B-Chat-Int4", device_map="auto", trust_remote_code=True, use_safetensors=True).eval()
 ```
 
-この方法では、Qwen-7B を `NF4` と `Int8` でロードすることができ、メモリ使用量を節約できる。以下にモデル性能の関連統計量を示します。量子化により、有効性は若干低下するが、推論効率は大幅に向上し、メモリコストが削減されることがわかります。
+推論を実行するには、上で示した基本的な使い方に似ているが、generation configurationを明示的に渡すことを忘れないこと：
 
-| Precision   |   MMLU   |  GPU Memory for Loading Model |
-| ----------- | :------: | :---------------------------: |
-|   BF16      |   56.7   |             16.38G            |
-|   Int8      |   52.8   |             10.44G            |
-|    NF4      |   48.9   |             7.79G             |
+```python
+from transformers import GenerationConfig
+config = GenerationConfig.from_pretrained("Qwen/Qwen-7B-Chat-Int4", trust_remote_code=True)
+response, history = model.chat(tokenizer, "Hi", history=None, generation_config=config)
+```
 
-注：上表のGPUメモリ使用量プロファイリングは、シングルA100-SXM4-80G GPU、PyTorch 2.0.1、CUDA 11.8、フラッシュアテンション使用で実行されています。
+### 性能
 
-## 推論効率
+ベンチマークにおけるBF16モデルとInt4モデルの性能について説明する。結果を以下に示します：
+
+|  Quantization |   MMLU     |  CEval (val) |  GSM8K |  Humaneval |
+| ------------- | :--------: | :----------: | :----: | :--------: |
+| BF16          |    53.9    |     54.2     |  41.1  |    24.4    |
+| Int4          |    52.6    |     52.9     |  38.1  |    23.8    |
 
 ### 推論スピード
 
-BF16精度、量子化レベルInt8またはNF4で、それぞれ2Kトークンを生成する平均推論速度を測定した。
+BF16の精度とInt4の量子化レベルの下で、それぞれ2048個と8192個のトークンを生成する平均推論速度(tokens/s)を測定した。
 
-| Quantization Level | Inference Speed with flash_attn (tokens/s) | Inference Speed w/o flash_attn (tokens/s) |
-| ------ | :---------------------------: | :---------------------------: |
-| BF16 (no quantization) | 30.06 | 27.55 |
-| Int8 (bnb) | 7.94 | 7.86 |
-| NF4 (bnb) | 21.43 | 20.37 |
+|  Quantization | Speed (2048 tokens) | Speed (8192 tokens) |
+| ------------- | :------------------:| :------------------:|
+|      BF16     | 30.53               | 28.51               |
+|      Int4     | 45.60               | 33.83               |
 
-詳細には、プロファイリングの設定は、1コンテクスト・トークンで2048の新しいトークンを生成している。プロファイリングは、PyTorch 2.0.1とCUDA 11.8を搭載したシングルA100-SXM4-80G GPUで実行される。推論速度は生成された2048個のトークンの平均です。
+詳細には、プロファイリングの設定は、1コンテクスト・トークンで8192個の新しいトークンを生成している。プロファイリングは、PyTorch 2.0.1とCUDA 11.4を搭載したシングルA100-SXM4-80G GPUで実行される。推論速度は生成された8192個のトークンの平均値です。
 
 ### GPUメモリ使用量
 
-また、BF16またはInt8/NF4量子化レベルの下で、2048個のトークンをコンテキストとしてエンコードした場合（および単一のトークンを生成した場合）と、8192個のトークンを生成した場合（単一のトークンをコンテキストとして生成した場合）のGPUメモリ使用量のピーク値をそれぞれプロファイリングしました。結果を以下に示す。
-
-Flash attentionを使用した場合のメモリ使用量は以下の通りである：
+また、BF16またはInt4の量子化レベルで、それぞれ2048トークンをコンテキストとしてエンコードした場合（および単一のトークンを生成した場合）と、8192トークンを生成した場合（単一のトークンをコンテキストとして生成した場合）のGPUメモリ使用量のピーク値をプロファイリングしました。その結果を以下に示します。
 
 | Quantization Level | Peak Usage for Encoding 2048 Tokens | Peak Usage for Generating 8192 Tokens |
-| --- | :---: | :---: |
-| BF16 | 18.11GB | 23.52GB |
-| Int8 | 12.17GB | 17.60GB |
-| NF4 | 9.52GB | 14.93GB |
+| ------------------ | :---------------------------------: | :-----------------------------------: |
+| BF16               |               18.99GB               |                24.40GB                |
+| Int4               |               10.20GB                |                15.61GB                |
 
-Flash attentionを使用しない場合、メモリ使用量は次のようになる：
-
-| Quantization Level | Peak Usage for Encoding 2048 Tokens | Peak Usage for Generating 8192 Tokens |
-| --- | :---: | :---: |
-| BF16 | 18.11GB | 24.40GB |
-| Int8 | 12.18GB | 18.47GB |
-| NF4 | 9.52GB | 15.81GB |
-
-上記のスピードとメモリーのプロファイリングは、[このスクリプト](https://qianwen-res.oss-cn-beijing.aliyuncs.com/profile.py)を使って行われた。
+上記のスピードとメモリーのプロファイリングは、[このスクリプト](https://qianwen-res.oss-cn-beijing.aliyuncs.com/profile.py)を使用しています。
 
 ## デモ
-
-### CLI デモ
-
-`cli_demo.py` に CLI のデモ例を用意しています。ユーザはプロンプトを入力することで Qwen-7B-Chat と対話することができ、モデルはストリーミングモードでモデルの出力を返します。以下のコマンドを実行する：
-
-```
-python cli_demo.py
-```
 
 ### ウェブ UI
 
@@ -307,7 +274,28 @@ pip install -r requirements_web_demo.txt
 python web_demo.py
 ```
 
+<p align="center">
+    <br>
+    <img src="assets/web_demo.gif" width="600" />
+    <br>
+<p>
+
+### CLI デモ
+
+`cli_demo.py` に CLI のデモ例を用意しています。ユーザはプロンプトを入力することで Qwen-7B-Chat と対話することができ、モデルはストリーミングモードでモデルの出力を返します。以下のコマンドを実行する：
+
+```
+python cli_demo.py
+```
+
+<p align="center">
+    <br>
+    <img src="assets/cli_demo.gif" width="600" />
+    <br>
+<p>
+
 ## API
+
 OpenAI APIをベースにローカルAPIをデプロイする方法を提供する（@hanpenggitに感謝）。始める前に、必要なパッケージをインストールしてください：
 
 ```bash
@@ -328,6 +316,8 @@ APIの使い方も簡単だ。以下の例をご覧ください：
 import openai
 openai.api_base = "http://localhost:8000/v1"
 openai.api_key = "none"
+
+# create a request activating streaming response
 for chunk in openai.ChatCompletion.create(
     model="Qwen-7B",
     messages=[
@@ -337,7 +327,23 @@ for chunk in openai.ChatCompletion.create(
 ):
     if hasattr(chunk.choices[0].delta, "content"):
         print(chunk.choices[0].delta.content, end="", flush=True)
+
+# create a request not activating streaming response
+response = openai.ChatCompletion.create(
+    model="Qwen-7B",
+    messages=[
+        {"role": "user", "content": "你好"}
+    ],
+    stream=False
+)
+print(response.choices[0].message.content)
 ```
+
+<p align="center">
+    <br>
+    <img src="assets/openai_api.gif" width="600" />
+    <br>
+<p>
 
 ## ツールの使用
 
