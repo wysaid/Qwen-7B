@@ -14,7 +14,6 @@ from contextlib import asynccontextmanager
 from typing import Any, Dict, List, Literal, Optional, Union
 from transformers import AutoTokenizer, AutoModelForCausalLM
 from transformers.generation import GenerationConfig
-# from auto_gptq import AutoGPTQForCausalLM
 from sse_starlette.sse import EventSourceResponse
 
 import gradio as gr
@@ -253,20 +252,11 @@ def _build_demo(args, model, tokenizer):
         return []
 
     with gr.Blocks() as demo:
-        gr.Markdown("""\
-<p align="center"><img src="https://modelscope.cn/api/v1/models/qwen/Qwen-7B-Chat/repo?
-Revision=master&FilePath=assets/logo.jpeg&View=true" style="height: 80px"/><p>""")
         gr.Markdown("""<center><font size=8>Qwen-7B-Chat Bot</center>""")
         gr.Markdown(
             """\
 <center><font size=3>This WebUI is based on Qwen-7B-Chat, developed by Alibaba Cloud. \
 (本WebUI基于Qwen-7B-Chat打造，实现聊天机器人功能。)</center>""")
-        gr.Markdown("""\
-<center><font size=4>Qwen-7B <a href="https://modelscope.cn/models/qwen/Qwen-7B/summary">🤖 </a> 
-| <a href="https://huggingface.co/Qwen/Qwen-7B">🤗</a>&nbsp ｜ 
-Qwen-7B-Chat <a href="https://modelscope.cn/models/qwen/Qwen-7B-Chat/summary">🤖 </a> | 
-<a href="https://huggingface.co/Qwen/Qwen-7B-Chat">🤗</a>&nbsp ｜ 
-&nbsp<a href="https://github.com/QwenLM/Qwen-7B">Github</a></center>""")
 
         chatbot = gr.Chatbot(label='Qwen-7B-Chat', elem_classes="control-height")
         query = gr.Textbox(lines=2, label='Input')
@@ -301,7 +291,7 @@ def _get_args():
     parser.add_argument("--cpu-only", action="store_true", help="Run demo with CPU only")
     parser.add_argument("--server-port", type=int, default=8080,
                         help="Demo server port.")
-    parser.add_argument("--server-name", type=str, default="127.0.0.1",
+    parser.add_argument("--server-name", type=str, default="0.0.0.0",
                         help="Demo server name.")
 
     args = parser.parse_args()
@@ -320,21 +310,12 @@ if __name__ == "__main__":
     else:
         device_map = "auto"
 
-    if args.checkpoint_path == "Qwen/Qwen-7B-Chat-Int4":
-        from auto_gptq import AutoGPTQForCausalLM
-        model = AutoGPTQForCausalLM.from_quantized(
-            args.checkpoint_path,
-            device_map=device_map,
-            trust_remote_code=True,
-            resume_download=True,
-        ).eval()
-    else:
-        model = AutoModelForCausalLM.from_pretrained(
-            args.checkpoint_path,
-            device_map=device_map,
-            trust_remote_code=True,
-            resume_download=True,
-        ).eval()
+    model = AutoModelForCausalLM.from_pretrained(
+        args.checkpoint_path,
+        device_map=device_map,
+        trust_remote_code=True,
+        resume_download=True,
+    ).eval()
     model.generation_config = GenerationConfig.from_pretrained(
         args.checkpoint_path, trust_remote_code=True, resume_download=True,
     )

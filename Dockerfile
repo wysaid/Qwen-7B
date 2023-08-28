@@ -32,49 +32,26 @@ RUN pip install -r requirements_openai_api.txt
 WORKDIR ${workdir}
 RUN pip install -r requirements_web_demo.txt
 
-# Install AutoGPTQ (for Qwen/Qwen-7B-Chat-Int4)
-ENV BUILD_CUDA_EXT=0
-WORKDIR ${workdir}
-RUN git clone https://github.com/PanQiWei/AutoGPTQ.git && \
-    cd AutoGPTQ && \
-    pip install .
-# RUN pip install auto-gptq --extra-index-url https://huggingface.github.io/autogptq-index/whl/cu117/
-
-# clone Qwen-7B-Chat-Int4 model
-RUN git clone https://huggingface.co/Qwen/Qwen-7B-Chat-Int4
-# clone Qwen-7B-Chat model
-# RUN git clone https://huggingface.co/Qwen/Qwen-7B-Chat
+# Offline mode, check https://huggingface.co/docs/transformers/v4.15.0/installation#offline-mode
+ENV HF_DATASETS_OFFLINE=1
+ENV TRANSFORMERS_OFFLINE=1
 
 # set TZ, make logs dir, and expose port 8080
 ENV TZ=Asia/Shanghai
 RUN mkdir -p ${workdir}/logs && chmod 777 ${workdir}/logs
 VOLUME /var/app/logs
-RUN chmod -R 755 ${workdir}
-EXPOSE 8080
 
-# copy main app
-WORKDIR ${workdir}
-# COPY cache_model.py openai_api_web.py ./
-COPY openai_api_web.py ./
-
-# set cache dir
-# ENV TRANSFORMERS_CACHE=${workdir}/cache/huggingface/transformers/
-# ENV HF_HOME=${workdir}/cache/huggingface/
-# ENV MPLCONFIGDIR=${workdir}/.config/matplotlib/
-
-# Cache model
-# RUN python3 cache_model.py -c Qwen/Qwen-7B-Chat-Int4
-# RUN python3 cache_model.py
-
-# RUN adduser -g -u -D 20001 appuser
+# create user 20001
 RUN useradd -r -m appuser -u 20001 -g 0
-RUN chown -R 20001 ${workdir}
 
-# Offline mode, check https://huggingface.co/docs/transformers/v4.15.0/installation#offline-mode
-ENV HF_DATASETS_OFFLINE=1
-ENV TRANSFORMERS_OFFLINE=1
+WORKDIR ${workdir}
+# copy model
+# RUN git clone https://huggingface.co/Qwen/Qwen-7B-Chat
+COPY --chown=20001:20001 Qwen-7B-Chat ./Qwen-7B-Chat
+# copy main app
+COPY --chown=20001:20001 openai_api.py web_demo.py ./
 
-CMD ["python3", "openai_api_web.py", "-c", "./Qwen/Qwen-7B-Chat-Int4"]
-# CMD ["python3", "openai_api_web.py", "-c", "Qwen/Qwen-7B-Chat-Int4"]
-# CMD ["python3", "openai_api_web.py"]
-# ENTRYPOINT [ "/bin/bash" ]
+# EXPOSE 8080
+# CMD ["python3", "web_demo.py", "-c", "./Qwen-7B-Chat", "--server-name", "0.0.0.0", "--server-port", "8080"]
+EXPOSE 9080
+CMD ["python3", "openai_api.py", "-c", "./Qwen-7B-Chat", "--server-name", "0.0.0.0", "--server-port", "9080"]
